@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1691836800000,
+    "title": "Login not working",
+    "description": "User cannot login using OAuth. Error shows 500.",
+    "priority": "High",
+    "status": "open",
+    "createdAt": "2023-08-12T10:00:00.000Z"
+  },
+  {
+    "id": 1691836800001,
+    "title": "Feature request: dark mode",
+    "description": "Add dark mode toggle across app.",
+    "priority": "Low",
+    "status": "open",
+    "createdAt": "2023-08-12T11:00:00.000Z"
+  },
+  {
+    "id": 1691836800002,
+    "title": "Typo on homepage",
+    "description": "Small typo in the hero section copy.",
+    "priority": "Medium",
+    "status": "closed",
+    "createdAt": "2023-08-12T12:00:00.000Z"
+  }
+]
