@@ -10,7 +10,7 @@ export default function TicketItem({ ticket, onDelete }: TicketItemProps) {
   async function handleDelete() {
     if (!confirm("Are you sure you want to delete this ticket?")) return;
 
-    const res = await fetch(`/api/tickets/${ticket.id}`, { method: "DELETE" });
+    const res = await fetch(`/api/delete/${ticket.id}`, { method: "DELETE" });
 
     if (res.ok && onDelete) {
       onDelete(ticket.id.toString());

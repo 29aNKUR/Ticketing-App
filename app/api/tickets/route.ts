@@ -27,12 +27,9 @@ export async function POST(req: Request) {
     if (!title?.trim()) {
       return NextResponse.json({ error: "Title is required" }, { status: 400 });
     }
-
-    // Read existing tickets
     const raw = await readFile(DATA_PATH, "utf8");
     const tickets: Ticket[] = JSON.parse(raw || "[]");
 
-    // Create a new ticket
     const newTicket: Ticket = {
       id: Date.now(),
       title: title.trim(),
@@ -42,10 +39,8 @@ export async function POST(req: Request) {
       createdAt: new Date().toISOString(),
     };
 
-    // Add new ticket at the top
     tickets.unshift(newTicket);
 
-    // Write updated tickets back to the file
     await writeFile(DATA_PATH, JSON.stringify(tickets, null, 2), "utf8");
 
     return NextResponse.json(tickets, { status: 201 });
@@ -53,33 +48,6 @@ export async function POST(req: Request) {
     console.error("POST /api/tickets error:", error);
     return NextResponse.json(
       { error: "Failed to save ticket" },
-      { status: 500 }
-    );
-  }
-}
-
-export async function DELETE(
-  _req: Request,
-  { params }: { params: { id: string } }
-) {
-  try {
-    const raw = await readFile(DATA_PATH, "utf8");
-    let tickets: Ticket[] = JSON.parse(raw || "[]");
-
-    const idNum = Number(params.id);
-    const newTickets = tickets.filter((ticket) => ticket.id !== idNum);
-
-    if (newTickets.length === tickets.length) {
-      return NextResponse.json({ error: "Ticket not found" }, { status: 404 });
-    }
-
-    await writeFile(DATA_PATH, JSON.stringify(newTickets, null, 2), "utf8");
-
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error("DELETE /api/tickets/[id] error:", error);
-    return NextResponse.json(
-      { error: "Failed to delete ticket" },
       { status: 500 }
     );
   }
