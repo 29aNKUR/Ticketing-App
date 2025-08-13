@@ -7,13 +7,15 @@ const DATA_PATH = path.resolve("data/tickets.json");
 
 export async function DELETE(
   _req: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await context.params;
+
   try {
     const raw = await readFile(DATA_PATH, "utf8");
-    let tickets: Ticket[] = JSON.parse(raw || "[]");
+    const tickets: Ticket[] = JSON.parse(raw || "[]");
 
-    const idNum = Number(params.id);
+    const idNum = Number(id);
     const newTickets = tickets.filter((ticket) => ticket.id !== idNum);
 
     if (newTickets.length === tickets.length) {
